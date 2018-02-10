@@ -1,9 +1,10 @@
+/*global window*/
+/*jslint this:true*/
 /**
  * Created by tonte on 10/4/17.
  */
-/*global window, document*/
-/* jshint -W108, -W109 */
-/* jslint bitwise: true, unparam: true, regexp: true, this: true*/
+
+
 
 (function (window) {
     'use strict';
@@ -18,13 +19,9 @@
 
 
     BytePushers.implementsInterface = function (o) { /*, ... */
-        var i,
-            m,
-            arg;
-
-        for (i = 1; i < arguments.length; i = i + 1) { // for each argument after o var arg = arguments[i];
-            arg = arguments[i];
-            switch (typeof arg) { // If arg is a:
+        arguments.every(function (arg, argIndex) {
+            if (argIndex > 0) {
+                switch (typeof arg) { // If arg is a:
                 case 'string': // string: check for a method with that name
                     if (typeof o[arg] !== "function") {
                         return false;
@@ -34,19 +31,20 @@
                 // If the argument is a function, we use its prototype object arg = arg.prototype;
                 // fall through to the next case
                 case 'object': // object: check for matching methods
-                    for (m in arg) { // For each property of the object
+                    Object.keys(arg).forEach(function (m) { //for (m in arg) { // For each property of the object
                         if (arg.hasOwnProperty(m)) {
                             if (typeof arg[m] !== "function") {
-                                break;
+                                return false;  // Originally was a break but now it return false;
                             } // skip non-methods
                             if (typeof o[m] !== "function") {
                                 return false;
                             }
                         }
-                    }
+                    });
                     break;
+                }
             }
-        }
+        });
 
         // If we're still here, then o implements everything
         return true;
@@ -58,7 +56,7 @@
         if (parts[0] === "BytePushers") {
             parts = parts.slice(1);
         }
-        parts.forEach(function (part, index) {
+        parts.forEach(function (part) {
             // create a property if it doesn't exist
             if (parent[part] === undefined) {
                 parent[part] = {};
@@ -164,21 +162,24 @@
         // Set up default values.
         var classname = data.name,
             Superclass = data.extend || Object,
-            constructor = data.construct || function () {return; },
+            constructor = data.construct || function () {
+                return;
+            },
             methods = data.methods || {},
             statics = data.statics || {},
             borrows,
             provides,
             proto,
-            i1,
-            i2,
+            /*i1,*/
+            /*i2,*/
             c1,
-            c2,
-            p1,
-            p2,
-            p3,
-            p4,
-            p5;
+            c2;
+            /*,
+            p1,*/
+            /*p2,*/
+            /*p3,*/
+            /*p4,*/
+            /*p5*/
 
         // Borrows may be a single constructor or an array of them.
         if (!data.borrows) {
@@ -186,7 +187,7 @@
         } else if (data.borrows instanceof Array) {
             borrows = data.borrows;
         } else {
-            borrows = [ data.borrows ];
+            borrows = [data.borrows];
         }
 
         // Ditto for the provides property.
@@ -195,38 +196,39 @@
         } else if (data.provides instanceof Array) {
             provides = data.provides;
         } else {
-            provides = [ data.provides ];
+            provides = [data.provides];
         }
 
         // Create the object that will become the prototype for our class.
         proto = new Superclass();
 
         // Delete any noninherited properties of this new prototype object.
-        for (p1 in proto) {
+        Object.keys(proto).forEach(function (p1) { //for (p1 in proto) {
             if (proto.hasOwnProperty(p1)) {
                 delete proto[p1];
             }
-        }
+        });
 
         // Borrow methods from "mixin" classes by copying to our prototype.
-        for (i1 = 0; i1 < borrows.length; i1 = i1 + 1) {
+        // ignore parameter tells jsLint to ignore the first variable that is not being used in function.
+        Object.keys(borrows).forEach(function (i1) { //for (i1 = 0; i1 < borrows.length; i1 = i1 + 1) {
             c1 = data.borrows[i1];
             borrows[i1] = c1;
             // Copy method properties from prototype of c to our prototype
-            for (p2 in c1.prototype) {
+            Object.keys(c1.prototype).forEach(function (p2) { //for (p2 in c1.prototype) {
                 if (typeof c1.prototype[p2] === "function") {
                     proto[p2] = c1.prototype[p2];
                 }
-            }
-        }
+            });
+        });
 
         // Copy instance methods to the prototype object
         // This may overwrite methods of the mixin classes
-        for (p3 in methods) {
+        Object.keys(methods).forEach(function (p3) { //for (p3 in methods) {
             if (methods.hasOwnProperty(p3)) {
                 proto[p3] = methods[p3];
             }
-        }
+        });
 
         // Set up the reserved "constructor", "superclass", and "classname"
         // properties of the prototype.
@@ -238,9 +240,9 @@
         }
 
         // Verify that our prototype provides all of the methods it is supposed to.
-        for (i2 = 0; i2 < provides.length; i2 = i2 + 1) {  // for each class
+        Object.keys(provides).forEach(function (ignore, i2) { //for (i2 = 0; i2 < provides.length; i2 = i2 + 1) {  // for each class
             c2 = provides[i2];
-            for (p4 in c2.prototype) {   // for each property
+            Object.keys(c2.prototype).forEach(function (p4) { //for (p4 in c2.prototype) {   // for each property
                 if (typeof c2.prototype[p4] === "function" && (p4 === "constructor" || p4 === "superclass")) { //methods only
                     // Check that we have a method with the same name and that
                     // it has the same number of declared arguments.  If so, move on
@@ -249,18 +251,18 @@
                         throw new Error("Class " + classname + " does not provide method " + c2.classname + "." + p4);
                     }
                 }
-            }
-        }
+            });
+        });
 
         // Associate the prototype object with the constructor function
         constructor.prototype = proto;
 
         // Copy static properties to the constructor
-        for (p5 in statics) {
+        Object.keys(statics).forEach(function (p5) { //for (p5 in statics) {
             if (statics.hasOwnProperty(p5)) {
                 constructor[p5] = statics[p5];
             }
-        }
+        });
 
         // Finally, return the constructor function
         return constructor;
@@ -282,7 +284,7 @@
         if (x.length > 0) {
             // If the array is nonempty, it must at a minimum
             // have a property defined whose name is the number length-1
-            if (!x.hasOwnProperty((x.length - 1))) {
+            if (!x.hasOwnProperty(x.length - 1)) {
                 return false;
             }
         }
@@ -293,8 +295,7 @@
     // methods in I.prototype. Otherwise, return false.  Throws an exception
     // if I is a built-in type with nonenumerable methods.
     BytePushers.provides = function (O, I) {
-        var proto = I.prototype,
-            p6;
+        var proto = I.prototype; /*,p6*/
         // If O actually is an instance of I, it obviously looks like I
         if (O instanceof I) {
             return true;
@@ -312,7 +313,7 @@
             return undefined;
         }
 
-        for (p6 in proto) {  // Loop through all properties in I.prototype
+        Object.keys(proto).forEach(function (p6) { //for (p6 in proto) {  // Loop through all properties in I.prototype
             // Ignore properties that are not functions
             if (typeof proto[p6] === "function") {
                 // If O does not have a property by the same name return false
@@ -329,7 +330,7 @@
                     return false;
                 }
             }
-        }
+        });
         // If all the methods check out, we can finally return true.
         return true;
     };
@@ -340,23 +341,29 @@
     // instances of the type. The returned constructor has properties that // map the name of a value to the value itself, and also a values array, // a foreach() iterator function
     BytePushers.enumeration = function (namesToValues) {
         // This is the dummy constructor function that will be the return value.
-        var name,
-            e,
-            i3,
-            enumeration = function () { throw "Can't Instantiate Enumerations"; },
+        var e, /*name, i3,*/
+            enumeration = function () {
+                throw "Can't Instantiate Enumerations";
+            },
             proto;
 
         enumeration.prototype = { // Enumerated values inherit from this object.
             constructor: enumeration, // Identify type
-            toString: function () { return this.name; }, // Return name
-            valueOf: function () { return this.value; }, // Return value
-            toJSON: function () { return this.name; } // For serialization
+            toString: function () {
+                return this.name;
+            }, // Return name
+            valueOf: function () {
+                return this.value;
+            }, // Return value
+            toJSON: function () {
+                return this.name;
+            } // For serialization
         };
         proto = enumeration;
         enumeration.values = []; // An array of the enumerated value objects
 
         // Now create the instances of this new type.
-        for (name in namesToValues) {        // For each value
+        Object.keys(namesToValues).forEach(function (name) { //for (name in namesToValues) {        // For each value
             if (namesToValues.hasOwnProperty(name)) {
                 e = BytePushers.inherit(proto); // Create an object to represent it
                 Object.defineProperties(e, {
@@ -384,13 +391,13 @@
                 enumeration[name] = e;          // Make it a property of constructor
                 enumeration.values.push(e);     // And store in the values array
             }
-        }
+        });
 
         // A class method for iterating the instances of the class
         enumeration.foreach = function (f, c) {
-            for (i3 = 0; i3 < this.values.length; i3 = i3 + 1) {
+            Object.keys(this.values).forEach(function (i3) { //for (i3 = 0; i3 < this.values.length; i3 = i3 + 1) {
                 f.call(c, this.values[i3]);
-            }
+            });
         };
         // Return the constructor that identifies the new type
         return enumeration;
