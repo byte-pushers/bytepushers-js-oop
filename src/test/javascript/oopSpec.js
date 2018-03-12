@@ -2,7 +2,7 @@
  * Created by tonte on 2/5/18.
  */
 /*global expect, describe, it*/
-define(['bytepushers'], function (BytePushers) {
+define(['bytepushers', 'Person', 'Employee'], function (BytePushers, Person, Employee) {
     describe("Object Oriented Programming tests:", function () {
 
         describe('Namespaces', function () {
@@ -36,6 +36,9 @@ define(['bytepushers'], function (BytePushers) {
                 expect(emp.getSalary()).toBe(80000);
                 expect(emp.getTitle()).toBe("Full Stack Developer");
                 expect(emp.getDepartment()).toBe("IT");
+
+                emp.setId(2);
+                expect(emp.getId()).toBe(2);
             })
         });
     });

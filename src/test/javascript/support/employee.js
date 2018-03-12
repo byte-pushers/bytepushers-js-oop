@@ -1,4 +1,4 @@
-(function() {
+(function(BytePushers) {
     BytePushers = BytePushers || {};
     BytePushers.models = BytePushers.models ||  BytePushers.namespace("software.bytepushers.models");
 
@@ -15,35 +15,35 @@
             return id;
         };
 
-        this.setId = function (id) {
-            this.id = id;
+        this.setId = function (someId) {
+            id = someId;
         };
 
         this.getSalary = function () {
             return salary;
         };
 
-        this.setSalary = function (salary) {
-            module.exports = BytePushers;this.salary = salary;
+        this.setSalary = function (someSalary) {
+            salary = someSalary;
         };
 
         this.getTitle = function () {
             return title;
         };
 
-        this.setTitle = function (title) {
-            this.title = title;
+        this.setTitle = function (someTitle) {
+            title = someTitle;
         };
 
         this.getDepartment = function () {
             return department;
         };
 
-        this.setDepartment = function (department) {
-            this.department = department;
+        this.setDepartment = function (someDepartment) {
+            department = someDepartment;
         };
     }
     BytePushers.models.Employee.prototype = BytePushers.inherit(BytePushers.models.Person.prototype);
     BytePushers.models.Employee.prototype.constructor = BytePushers.models.Employee;
     BytePushers.models.Employee.prototype.superclass = BytePushers.models.Person;
-})();
+})(BytePushers);

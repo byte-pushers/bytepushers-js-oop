@@ -1,4 +1,4 @@
-(function() {
+(function(BytePushers) {
     BytePushers = BytePushers || {};
     BytePushers.models = BytePushers.models ||  BytePushers.namespace("software.bytepushers.models");
 
@@ -12,32 +12,32 @@
             return firstName;
         };
 
-        this.setFirstName = function(firstName) {
-            this.firstName = firstName;
+        this.setFirstName = function(someFirstName) {
+            firstName = someFirstName;
         };
 
         this.getMiddleName = function() {
             return middleName;
         };
 
-        this.setMiddleName = function(middleName) {
-            this.middleName = middleName;
+        this.setMiddleName = function(someMiddleName) {
+            middleName = someMiddleName;
         };
 
         this.getLastName = function() {
             return lastName;
         };
 
-        this.setLastName = function(lastName) {
-            this.lastName = lastName;
+        this.setLastName = function(someLastName) {
+            lastName = someLastName;
         };
 
         this.getBirthDate = function () {
             return birthDate;
         };
 
-        this.setBirthDate = function (birthDate) {
-            this.birthDate = birthDate;
+        this.setBirthDate = function (someBirthDate) {
+            someBirthDate = someBirthDate;
         };
     }
-})();
+})(BytePushers);
