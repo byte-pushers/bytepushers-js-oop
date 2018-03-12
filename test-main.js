@@ -11,12 +11,20 @@ require.config({
   baseUrl: '/base',
 
   paths: {
-      'bytepushers': 'src/main/javascript/software.bytepushers.oop'
+      'bytepushers': 'src/main/javascript/software.bytepushers.oop',
+      'Person': 'src/test/javascript/support/person',
+      'Employee': 'src/test/javascript/support/employee'
   },
 
   shim: {
       bytepushers: {
           exports: 'BytePushers'
+      },
+      Person: {
+          deps: ['bytepushers']
+      },
+      Employee: {
+          deps: ['bytepushers', 'Person']
       }
   },
 
