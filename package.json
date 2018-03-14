@@ -1,6 +1,6 @@
 {
   "name": "bytepushers-js-oop",
-  "version": "0.0.7",
+  "version": "0.0.5",
   "description": "Small library that provide various Object Oriented Programming implementations for JavaScript.",
   "repository": {
     "type": "git",
@@ -57,6 +57,6 @@
     "files": [
       "src/main/javascript"
     ],
-    "main": "./src/main/javascript/index.js"
+    "main": "./index.js"
   }
 }
