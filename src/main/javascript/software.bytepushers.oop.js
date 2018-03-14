@@ -403,4 +403,6 @@ var window = window || {};
         // Return the constructor that identifies the new type
         return enumeration;
     };
+
+    module.exports = BytePushers;
 }(window));
