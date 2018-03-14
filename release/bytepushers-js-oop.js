@@ -1,11 +1,12 @@
-/*global window*/
+/*global window, module*/
 /*jslint this:true*/
-/*jshint -W079 */
+/*jshint -W079, -W038 */
 /**
  * Created by tonte on 10/4/17.
  */
 
 var window = window || {};
+var module = module || {};
 
 (function (window) {
     'use strict';
@@ -403,4 +404,6 @@ var window = window || {};
         // Return the constructor that identifies the new type
         return enumeration;
     };
+
+    module.exports = BytePushers;
 }(window));

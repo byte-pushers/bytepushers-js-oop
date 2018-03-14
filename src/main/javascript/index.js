@@ -1,4 +1,4 @@
 /*global require, module, BytePushers */
 /*jshint -W079 */
-var BytePushers = require('./bytepushers-js-oop');
+var BytePushers = require('./software.bytepushers.oop');
 module.exports = BytePushers;
