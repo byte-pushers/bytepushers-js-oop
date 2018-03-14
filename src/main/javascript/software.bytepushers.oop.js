@@ -1,10 +1,11 @@
 /*global window*/
 /*jslint this:true*/
+/*jshint -W079 */
 /**
  * Created by tonte on 10/4/17.
  */
 
-
+var window = window || {};
 
 (function (window) {
     'use strict';

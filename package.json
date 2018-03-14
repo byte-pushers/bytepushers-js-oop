@@ -57,6 +57,6 @@
     "files": [
       "src/main/javascript"
     ],
-    "main": "index.js"
+    "main": "./index.js"
   }
 }
