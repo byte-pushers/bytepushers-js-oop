@@ -133,5 +133,5 @@ module.exports = function (grunt) {
     grunt.registerTask('test-karma-ci', ['karma:' + karma_ci]);
     grunt.registerTask('package', ['copy:' + build, 'uglify', 'concat']);
     grunt.registerTask('build', ['clean:' + build, 'validate', 'test', 'package']);
-    grunt.registerTask('release', ['clean:release', 'build', 'copy:release', 'bump', 'npm-publish']);
+    grunt.registerTask('release', ['clean:' + release, 'build', 'copy:release', 'bump', 'npm-publish']);
 };
