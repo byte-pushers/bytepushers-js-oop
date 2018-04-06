@@ -14,7 +14,7 @@
   "directories": {
     "lib": "src/main/javascript"
   },
-  "main": "release/index.js",
+  "main": "./release/index.js",
   "devDependencies": {
     "graceful-fs": "^4.1.4",
     "grunt": "~1.0.1",
@@ -57,6 +57,6 @@
     "files": [
       "src/main/javascript"
     ],
-    "main": "./index.js"
+    "main": "./release/index.js"
   }
 }
