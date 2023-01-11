@@ -5,12 +5,14 @@
  * Created by tonte on 10/4/17.
  */
 
-var window = window || {};
-var module = module || {};
+// var window = window || {};
+// var module = module || {};
 
 (function (window) {
     'use strict';
     var BytePushers;
+
+    window = window || {};
 
     if (window.BytePushers !== undefined && window.BytePushers !== null) {
         BytePushers = window.BytePushers;
@@ -18,7 +20,6 @@ var module = module || {};
         window.BytePushers = {};
         BytePushers = window.BytePushers;
     }
-
 
     BytePushers.implementsInterface = function (o) { /*, ... */
         arguments.every(function (arg, argIndex) {

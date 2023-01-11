@@ -1,6 +1,6 @@
 {
   "name": "bytepushers-js-oop",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Small library that provide various Object Oriented Programming implementations for JavaScript.",
   "repository": {
     "type": "git",
@@ -17,8 +17,9 @@
   "main": "./release/index.js",
   "devDependencies": {
     "graceful-fs": "^4.1.4",
-    "grunt": "~1.0.1",
+    "grunt": "~1.5.3",
     "grunt-bump": "^0.8.0",
+    "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^0.7.0",
     "grunt-contrib-concat": "^1.0.0",
     "grunt-contrib-copy": "^0.8.2",
@@ -38,7 +39,7 @@
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.2",
     "karma-requirejs": "^0.2.2",
-    "phantomjs": "^1.9.19",
+    "phantomjs": "^2.1.7",
     "requirejs": "^2.1.22"
   },
   "scripts": {
